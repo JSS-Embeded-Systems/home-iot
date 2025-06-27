@@ -1,0 +1,46 @@
+23/06/2025 18:30:16,651 [main] INFO  Server startServer 106  - Starting Moquette integration. Configuration file path=/Users/nils/Documents/Coding/Projects/iot/moquette-distribution-0.19/config/moquette.conf
+23/06/2025 18:30:16,652 [main] INFO  ResourceLoaderConfig <init> 40  - Loading configuration. ResourceLoader = file, configName = null.
+23/06/2025 18:30:16,652 [main] INFO  FileResourceLoader loadResource 68  - Loading file. Path = /Users/nils/Documents/Coding/Projects/iot/moquette-distribution-0.19/config/moquette.conf.
+23/06/2025 18:30:16,655 [main] INFO  ResourceLoaderConfig <init> 62  - Parsing configuration properties. ResourceLoader = file, configName = null.
+23/06/2025 18:30:16,659 [main] INFO  Server initInterceptors 526  - Configuring message interceptors...
+23/06/2025 18:30:16,659 [main] INFO  BrokerInterceptor <init> 48  - Initializing broker interceptor. InterceptorIds=[]
+23/06/2025 18:30:16,660 [main] INFO  Server startServer 194  - Using default SSL context creator
+23/06/2025 18:30:16,670 [main] INFO  ResourceAuthenticator <init> 59  - Loading password file config/password_file.conf
+23/06/2025 18:30:16,671 [main] INFO  FileResourceLoader loadResource 68  - Loading file. Path = /Users/nils/Documents/Coding/Projects/iot/moquette-distribution-0.19/config/password_file.conf.
+23/06/2025 18:30:16,671 [main] INFO  Server initializeAuthenticator 520  - An io.moquette.broker.security.ResourceAuthenticator authenticator instance will be used
+23/06/2025 18:30:16,671 [main] INFO  Server initializeAuthorizatorPolicy 499  - Authorizator policy io.moquette.broker.security.PermitAllAuthorizatorPolicy instance will be used
+23/06/2025 18:30:16,674 [main] INFO  H2Builder initStore 38  - Initializing H2 store to /Users/nils/Documents/Coding/Projects/iot/moquette-distribution-0.19/bin/data/moquette_store.h2
+23/06/2025 18:30:16,691 [main] INFO  Server initQueuesRepository 314  - Configuring segmented queue store to data
+23/06/2025 18:30:16,692 [main] INFO  QueuePool createOrLoadCheckpointFile 161  - Can't find any file named 'checkpoint.properties' in path: data, creating new one
+23/06/2025 18:30:16,700 [main] INFO  CTrieSubscriptionDirectory init 45  - Initializing CTrie
+23/06/2025 18:30:16,701 [main] INFO  CTrieSubscriptionDirectory init 48  - Initializing subscriptions store...
+23/06/2025 18:30:16,725 [main] INFO  NewNettyAcceptor initialize 168  - Netty is using NIO
+23/06/2025 18:30:16,791 [main] INFO  NewNettyAcceptor initFactory 221  - Server bound to host=0.0.0.0, port=1883, protocol=TCP MQTT
+23/06/2025 18:30:16,794 [main] INFO  NewNettyAcceptor initFactory 221  - Server bound to host=0.0.0.0, port=8080, protocol=Websocket MQTT
+23/06/2025 18:30:16,794 [main] INFO  Server startServer 273  - Moquette integration has been started successfully in 136 ms
+23/06/2025 18:30:55,913 [Thread-8] INFO  Server stopServer 600  - Unbinding integration from the configured ports
+23/06/2025 18:30:55,920 [Thread-8] INFO  NewNettyAcceptor close 394  - Waiting for worker and boss event loop groups to terminate...
+23/06/2025 18:30:57,990 [Thread-8] INFO  NewNettyAcceptor close 414  - Metrics messages[read=0, write=0] bytes[read=0, write=0]
+23/06/2025 18:30:57,991 [Thread-8] INFO  ScheduledExpirationService shutdown 70  - Successfully cancelled expired entities task
+23/06/2025 18:30:58,016 [Thread-8] INFO  BrokerInterceptor stop 82  - Shutting down interceptor thread pool...
+23/06/2025 18:30:58,017 [Thread-8] INFO  BrokerInterceptor stop 85  - Waiting for thread pool tasks to terminate...
+23/06/2025 18:30:58,017 [Thread-8] INFO  BrokerInterceptor stop 93  - interceptors stopped
+23/06/2025 18:30:58,017 [Thread-8] INFO  ScheduledExpirationService shutdown 70  - Successfully cancelled expired entities task
+23/06/2025 18:30:58,017 [Thread-8] INFO  ScheduledExpirationService shutdown 70  - Successfully cancelled expired entities task
+23/06/2025 18:30:58,017 [Session Executor 0] INFO  SessionEventLoop run 36  - SessionEventLoop Session Executor 0 interrupted
+23/06/2025 18:30:58,017 [Session Executor 3] INFO  SessionEventLoop run 36  - SessionEventLoop Session Executor 3 interrupted
+23/06/2025 18:30:58,017 [Session Executor 4] INFO  SessionEventLoop run 36  - SessionEventLoop Session Executor 4 interrupted
+23/06/2025 18:30:58,018 [Session Executor 0] INFO  SessionEventLoop run 40  - SessionEventLoop Session Executor 0 exit
+23/06/2025 18:30:58,017 [Session Executor 7] INFO  SessionEventLoop run 36  - SessionEventLoop Session Executor 7 interrupted
+23/06/2025 18:30:58,017 [Session Executor 2] INFO  SessionEventLoop run 36  - SessionEventLoop Session Executor 2 interrupted
+23/06/2025 18:30:58,017 [Session Executor 6] INFO  SessionEventLoop run 36  - SessionEventLoop Session Executor 6 interrupted
+23/06/2025 18:30:58,017 [Session Executor 1] INFO  SessionEventLoop run 36  - SessionEventLoop Session Executor 1 interrupted
+23/06/2025 18:30:58,017 [Session Executor 5] INFO  SessionEventLoop run 36  - SessionEventLoop Session Executor 5 interrupted
+23/06/2025 18:30:58,019 [Session Executor 5] INFO  SessionEventLoop run 40  - SessionEventLoop Session Executor 5 exit
+23/06/2025 18:30:58,019 [Session Executor 1] INFO  SessionEventLoop run 40  - SessionEventLoop Session Executor 1 exit
+23/06/2025 18:30:58,019 [Session Executor 6] INFO  SessionEventLoop run 40  - SessionEventLoop Session Executor 6 exit
+23/06/2025 18:30:58,018 [Session Executor 2] INFO  SessionEventLoop run 40  - SessionEventLoop Session Executor 2 exit
+23/06/2025 18:30:58,018 [Session Executor 7] INFO  SessionEventLoop run 40  - SessionEventLoop Session Executor 7 exit
+23/06/2025 18:30:58,018 [Session Executor 4] INFO  SessionEventLoop run 40  - SessionEventLoop Session Executor 4 exit
+23/06/2025 18:30:58,018 [Session Executor 3] INFO  SessionEventLoop run 40  - SessionEventLoop Session Executor 3 exit
+23/06/2025 18:30:58,020 [Thread-8] INFO  Server stopServer 622  - Moquette integration has been stopped.
