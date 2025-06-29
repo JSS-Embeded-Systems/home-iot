@@ -1,2 +1,4 @@
 # moquette because we didn't and wont fork
 /moquette
+# mocks and tests
+/mock
