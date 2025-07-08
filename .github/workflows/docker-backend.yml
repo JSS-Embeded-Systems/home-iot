@@ -1,0 +1,21 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "iot-backend"
+      - '.github/workflows/docker-backend.yml'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      TIMESTAMP: ${{ github.run_id }}
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build the Docker image
+      run: docker build ./iot-backend --file ./iot-backend/Dockerfile --tag iot-backend:${{ env.TIMESTAMP }}
