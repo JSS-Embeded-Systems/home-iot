@@ -2,3 +2,7 @@
 /moquette
 # mocks and tests
 /mock
+
+# Shitfiles
+.DS_Store
+.idea
