@@ -4,8 +4,8 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - "iot-backend"
-      - '.github/workflows/docker-backend.yml'
+      - "iot-dashboard"
+      - '.github/workflows/docker-dashboard.yml'
 
 jobs:
 
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TIMESTAMP: ${{ github.run_id }}
-      IMAGE_NAME: iot-backend
+      IMAGE_NAME: iot-dashboard
     steps:
       - uses: actions/checkout@v4
 
@@ -22,7 +22,7 @@ jobs:
         run: docker build ./${{env.IMAGE_NAME}} --file ./${{env.IMAGE_NAME}}/Dockerfile --tag ${{env.IMAGE_NAME}}:${{ env.TIMESTAMP }}
 
       - name: Save Docker image to file
-        run: docker save ${{ env.IMAGE_TAG }} | gzip > iot-backend.tar.gz
+        run: docker save ${{ env.IMAGE_NAME }}:${{ env.TIMESTAMP }} | gzip > iot-dashboard.tar.gz
 
       - name: Upload image to server
         uses: appleboy/scp-action@v0.1.6
@@ -30,8 +30,8 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: "iot-backend.tar.gz"
-          target: "~/Projects/iot-home/deployment/backend"
+          source: "iot-dashboard.tar.gz"
+          target: "~/Projects/iot-home/deployment/dashboard"
 
       - name: Remote deploy with SSH (zero downtime)
         uses: appleboy/ssh-action@v1.0.3
@@ -40,9 +40,9 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/Projects/iot-home/deployment/backend
-            gunzip -f iot-backend.tar.gz
-            docker load < iot-backend.tar
-            docker stop iot-backend || true
-            docker rm iot-backend || true
-            docker run -d --name iot-backend -p 3000:3000 ${{ env.IMAGE_NAME }}:${{ env.TIMESTAMP }}
+            cd ~/Projects/iot-home/deployment/dashboard
+            gunzip -f iot-dashboard.tar.gz
+            docker load < iot-dashboard.tar
+            docker stop iot-dashboard || true
+            docker rm iot-dashboard || true
+            docker run -d --name iot-dashboard -p 3000:3000 ${{ env.IMAGE_NAME }}:${{ env.TIMESTAMP }}
