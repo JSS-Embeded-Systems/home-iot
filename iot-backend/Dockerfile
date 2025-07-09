@@ -1,17 +1,14 @@
-FROM ubuntu:latest
-LABEL authors="nils"
+# Use Java 21 runtime only (no compiler needed)
+FROM openjdk:21-slim
 
-FROM maven:3.9-eclipse-temurin-17 AS builder
-WORKDIR /build
-
-COPY . .
-
-RUN mvn clean package -DskipTests
-
-FROM eclipse-temurin:17-jre
+# Set working directory inside the container
 WORKDIR /app
-COPY --from=builder /build/target/*.jar app.jar
 
+# Copy your locally built JAR file into the container
+COPY target/*.jar app.jar
+
+# Expose the port your Spring app uses (adjust if needed)
 EXPOSE 3000
 
+# Start the application
 ENTRYPOINT ["java", "-jar", "app.jar"]

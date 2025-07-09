@@ -1,0 +1,10 @@
+/Users/nils/Documents/Coding/Projects/iot/iot-backend/src/main/java/iot/microservice/controller/MicroController.java
+/Users/nils/Documents/Coding/Projects/iot/iot-backend/src/main/java/iot/microservice/entity/MqttDataEntity.java
+/Users/nils/Documents/Coding/Projects/iot/iot-backend/src/main/java/iot/microservice/exception/GlobalHandler.java
+/Users/nils/Documents/Coding/Projects/iot/iot-backend/src/main/java/iot/microservice/repository/MqttDataRepository.java
+/Users/nils/Documents/Coding/Projects/iot/iot-backend/src/main/java/iot/microservice/server/ServerApplication.java
+/Users/nils/Documents/Coding/Projects/iot/iot-backend/src/main/java/iot/microservice/service/MicroService.java
+/Users/nils/Documents/Coding/Projects/iot/iot-backend/src/main/java/iot/microservice/service/MqttListenerService.java
+/Users/nils/Documents/Coding/Projects/iot/iot-backend/src/main/java/iot/microservice/structure/RGBRequest.java
+/Users/nils/Documents/Coding/Projects/iot/iot-backend/src/main/java/iot/microservice/structure/Request.java
+/Users/nils/Documents/Coding/Projects/iot/iot-backend/src/main/java/iot/microservice/structure/Response.java

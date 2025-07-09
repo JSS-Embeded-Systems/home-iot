@@ -1,0 +1,10 @@
+iot/microservice/structure/Response.class
+iot/microservice/service/MicroService.class
+iot/microservice/exception/GlobalHandler.class
+iot/microservice/controller/MicroController.class
+iot/microservice/server/ServerApplication.class
+iot/microservice/structure/RGBRequest.class
+iot/microservice/repository/MqttDataRepository.class
+iot/microservice/service/MqttListenerService.class
+iot/microservice/structure/Request.class
+iot/microservice/entity/MqttDataEntity.class
