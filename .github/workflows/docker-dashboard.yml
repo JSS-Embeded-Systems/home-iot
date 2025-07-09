@@ -28,8 +28,8 @@ jobs:
         uses: appleboy/scp-action@v0.1.6
         with:
           host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
+          username: ${{ secrets.SSH_NAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "iot-dashboard.tar.gz"
           target: "~/Projects/iot-home/deployment/dashboard"
 
@@ -37,8 +37,8 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
+          username: ${{ secrets.SSH_NAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ~/Projects/iot-home/deployment/dashboard
             gunzip -f iot-dashboard.tar.gz
