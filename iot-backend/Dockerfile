@@ -1,9 +1,16 @@
 FROM ubuntu:latest
 LABEL authors="nils"
 
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jdk as builder
+WORKDIR /build
+
+COPY . .
+
+RUN ./mvnw clean package -DskipTests
+
+FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY target/*.jar app.jar
+COPY --from=builder /build/target/*.jar app.jar
 
 EXPOSE 3000
 
