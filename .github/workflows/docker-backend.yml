@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - "iot-backend"
+      - "iot-backend/**"
       - '.github/workflows/docker-backend.yml'
 
 jobs:

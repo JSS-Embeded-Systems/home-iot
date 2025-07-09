@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - "iot-dashboard"
+      - "iot-dashboard/**"
       - '.github/workflows/docker-dashboard.yml'
 
 jobs:
