@@ -32,7 +32,7 @@ jobs:
         uses: tailscale/github-action@v2
         with:
           oauth-client-id: $TS_OAUTH_CLIENT_ID
-          oauth-secret: $TS_OAUTH_SECRET
+          oauth-secret: $TS_OAUTH_CLIENT_SECRET
           tags: whisperN-ci
 
       - name: Do the deploy thing
