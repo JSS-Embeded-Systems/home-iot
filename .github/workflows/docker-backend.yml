@@ -28,6 +28,12 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build the Docker image
+        run: docker build ./${{env.IMAGE_NAME}} --file ./${{env.IMAGE_NAME}}/Dockerfile --tag ${{env.IMAGE_NAME}}:${{ env.TIMESTAMP }}
+
+      - name: Save Docker image to file
+        run: docker save ${{ env.IMAGE_TAG }} | gzip > iot-backend.tar.gz
+
       - name: Connect Tailscale
         uses: tailscale/github-action@v2
         with:
@@ -37,4 +43,11 @@ jobs:
 
       - name: Do the deploy thing
         run: |
-            ssh -o "StrictHostKeyChecking no" $HOST@nilss-mac-mini ""
+            ssh -o "StrictHostKeyChecking no" $HOST@nilss-mac-mini "
+            cd ~/Projects/iot-home/deployment/backend
+            gunzip -f iot-backend.tar.gz
+            docker load < iot-backend.tar
+            docker stop iot-backend || true
+            docker rm iot-backend || true
+            docker run -d --name iot-backend -p 3000:3000 ${{ env.IMAGE_NAME }}:${{ env.TIMESTAMP }}
+            "
