@@ -24,6 +24,17 @@ jobs:
       - name: Save Docker image to file
         run: docker save ${{ env.IMAGE_TAG }} | gzip > iot-backend.tar.gz
 
+      - name: Connect Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:devrel-ci
+
+      - name: Do the deploy thing
+        run: |
+            ssh -o "StrictHostKeyChecking no" ${{ secrets.SSH_HOST }}@devrel-prodbox-nyc ""
+
       - name: Upload image to server
         uses: appleboy/scp-action@v0.1.6
         with:
