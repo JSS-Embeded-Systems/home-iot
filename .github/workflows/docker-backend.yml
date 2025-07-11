@@ -21,18 +21,18 @@ jobs:
       TS_OAUTH_SECRET: ${{ secrets.TS_OAUTH_SECRET }}
       HOST: ${{ secrets.SSH_NAME }}
     steps:
+      - name: Build the Docker image
+        run: docker build ./${{env.IMAGE_NAME}} --file ./${{env.IMAGE_NAME}}/Dockerfile --tag ${{env.IMAGE_NAME}}:${{ env.TIMESTAMP }}
+
+      - name: Save Docker image to file
+        run: docker save ${{ env.IMAGE_TAG }} | gzip > iot-backend.tar.gz
+        
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build the Docker image
-        run: docker build ./${{env.IMAGE_NAME}} --file ./${{env.IMAGE_NAME}}/Dockerfile --tag ${{env.IMAGE_NAME}}:${{ env.TIMESTAMP }}
-
-      - name: Save Docker image to file
-        run: docker save ${{ env.IMAGE_TAG }} | gzip > iot-backend.tar.gz
 
       - name: Connect Tailscale
         uses: tailscale/github-action@v2
