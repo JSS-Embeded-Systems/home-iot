@@ -16,14 +16,6 @@ jobs:
       TIMESTAMP: ${{ github.run_id }}
       IMAGE_NAME: iot-backend
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Build the Docker image
-        run: docker build ./${{env.IMAGE_NAME}} --file ./${{env.IMAGE_NAME}}/Dockerfile --tag ${{env.IMAGE_NAME}}:${{ env.TIMESTAMP }}
-
-      - name: Save Docker image to file
-        run: docker save ${{ env.IMAGE_TAG }} | gzip > iot-backend.tar.gz
-
       - name: Connect Tailscale
         uses: tailscale/github-action@v2
         with:
@@ -33,26 +25,3 @@ jobs:
       - name: Do the deploy thing
         run: |
             ssh -o "StrictHostKeyChecking no" ${{ secrets.SSH_HOST }}@devrel-prodbox-nyc ""
-
-      - name: Upload image to server
-        uses: appleboy/scp-action@v0.1.6
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_NAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "iot-backend.tar.gz"
-          target: "~/Projects/iot-home/deployment/backend"
-
-      - name: Remote deploy with SSH (zero downtime)
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_NAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ~/Projects/iot-home/deployment/backend
-            gunzip -f iot-backend.tar.gz
-            docker load < iot-backend.tar
-            docker stop iot-backend || true
-            docker rm iot-backend || true
-            docker run -d --name iot-backend -p 3000:3000 ${{ env.IMAGE_NAME }}:${{ env.TIMESTAMP }}
