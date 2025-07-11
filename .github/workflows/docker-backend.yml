@@ -36,4 +36,4 @@ jobs:
 
       - name: Do the deploy thing
         run: |
-            ssh -o "StrictHostKeyChecking no" ${{ secrets.SSH_NAME }}@mac-mini ""
+            ssh -o "StrictHostKeyChecking no" ${{ secrets.SSH_NAME }}@nilss-mac-mini ""
