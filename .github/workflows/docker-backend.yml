@@ -33,6 +33,7 @@ jobs:
         with:
           oauth-client-id: $TS_OAUTH_CLIENT_ID
           oauth-secret: $TS_OAUTH_SECRET
+          tags: tag:whisperN-ci
 
       - name: Do the deploy thing
         run: |
