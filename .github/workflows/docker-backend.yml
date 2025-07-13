@@ -45,12 +45,6 @@ jobs:
           oauth-secret: $TS_OAUTH_SECRET
           tags: tag:whispern-ci
 
-      - name: Debug Tailscale access
-        run: |
-          tailscale status
-          ping -c 2 nilss-mac-mini.tailed622e.ts.net || echo "Ping failed"
-          ssh -o StrictHostKeyChecking=no nilsj@nilss-mac-mini.tailed622e.ts.net "hostname"
-
       - name: Execute SSH command on remote
         uses: appleboy/ssh-action@v1.0.0
         with:
