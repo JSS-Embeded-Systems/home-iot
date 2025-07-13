@@ -47,7 +47,9 @@ jobs:
 
       - name: Execute SSH command on remote
         run: |
-          echo "$SSH_KEY" | tr -d '\r' | awk '{print $0}' > key.pem
+          cat > key.pem <<EOF
+          ${SSH_KEY}
+          EOF
           chmod 600 key.pem
           ssh -i key.pem -o StrictHostKeyChecking=no nilsj@nilss-mac-mini.tailed622e.ts.net
           cd ~/Projects/iot-home/deployment/backend
@@ -56,3 +58,5 @@ jobs:
           docker stop iot-backend || true
           docker rm iot-backend || true
           docker run -d --name iot-backend -p 3000:3000 $IMAGE_NAME:$TIMESTAMP
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
