@@ -46,13 +46,12 @@ jobs:
           tags: tag:whispern-ci
 
       - name: Execute SSH command on remote
-        uses: appleboy/ssh-action@v1.0.0
+        uses: cloudposse/github-action-ssh@2.1.0
         with:
-            host: nilss-mac-mini
-            username: nilsj
-            key: $KEY
-            port: 22
-            script: |
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+          ssh-host: nilss-mac-mini.tailed622e.ts.net
+          ssh-user: ${{ secrets.SSH_NAME }}
+          ssh-command: |
               cd ~/Projects/iot-home/deployment/backend
               gunzip -f iot-backend.tar.gz
               docker load < iot-backend.tar
