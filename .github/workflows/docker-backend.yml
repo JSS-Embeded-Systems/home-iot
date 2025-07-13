@@ -61,6 +61,7 @@ jobs:
       - name: Execute SSH command on remote
         run: |
           ssh nilsj@nilss-mac-mini.tailed622e.ts.net
+          mkdir /Users/nilsj/Projects/home-iot/deployment/backend/
           cd /Users/nilsj/Projects/home-iot/deployment/backend/
           gunzip -f iot-backend.tar.gz
           docker load < iot-backend.tar
