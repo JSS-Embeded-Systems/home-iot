@@ -67,6 +67,8 @@ jobs:
           whoami
           ls -la
           cd /Users/nilsj/Projects/home-iot/deployment/backend/
+          ls -lh iot-backend.tar.gz iot-backend.tar
+          file iot-backend.tar
           gunzip -f iot-backend.tar.gz
           docker load < iot-backend.tar
           docker stop iot-backend || true
