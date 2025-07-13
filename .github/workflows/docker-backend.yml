@@ -50,6 +50,14 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
+      - name: Configure SSH (disable host key checking)
+        run: |
+          mkdir -p ~/.ssh
+          echo "Host *" > ~/.ssh/config
+          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+          echo "  UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+          chmod 600 ~/.ssh/config
+
       - name: Execute SSH command on remote
         run: |
           ssh nilsj@nilss-mac-mini.tailed622e.ts.net
