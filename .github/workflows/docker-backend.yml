@@ -60,7 +60,7 @@ jobs:
           ssh nilsj@nilss-mac-mini.tailed622e.ts.net 'bash -l -c "
           whoami
           ls -la
-          cd /Users/nilsj/Projects/home-iot/deployment/backend/
+          cd /Users/nilsj/Projects/home-iot/deployment/backend/iot-backend
           docker stop iot-backend || true
           docker rm iot-backend || true
           docker build -t iot-backend:latest .
