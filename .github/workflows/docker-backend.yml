@@ -48,8 +48,8 @@ jobs:
       - name: Execute SSH command on remote
         uses: appleboy/ssh-action@v1.0.0
         with:
-            host: $HOST
-            username: $NAME
+            host: nilss-mac-mini
+            username: nilsj
             key: $KEY
             port: 22
             script: |
