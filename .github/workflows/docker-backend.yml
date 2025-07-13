@@ -47,7 +47,7 @@ jobs:
 
       - name: Execute SSH command on remote
         run: |
-          echo "$KEY" > key.pem
+          echo "$SSH_KEY" > key.pem
           chmod 600 key.pem
           ssh -i key.pem -o StrictHostKeyChecking=no nilsj@nilss-mac-mini.tailed622e.ts.net
           cd ~/Projects/iot-home/deployment/backend
