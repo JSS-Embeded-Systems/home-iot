@@ -19,7 +19,9 @@ jobs:
       IMAGE_NAME: iot-backend
       TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
       TS_OAUTH_SECRET: ${{ secrets.TS_OAUTH_SECRET }}
-      HOST: ${{ secrets.SSH_NAME }}
+      HOST: ${{ secrets.SSH_HOST }}
+      NAME: ${{ secrets.SSH_NAME }}
+      KEY: ${{ secrets.KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -46,9 +48,9 @@ jobs:
       - name: Execute SSH command on remote
         uses: appleboy/ssh-action@v1.0.0
         with:
-            host: ${{ secrets.SSH_HOST }}
-            username: ${{ secrets.SSH_NAME }}
-            key: ${{ secrets.SSH_KEY }}
+            host: $HOST
+            username: $NAME
+            key: $KEY
             port: 22
             script: |
               cd ~/Projects/iot-home/deployment/backend
