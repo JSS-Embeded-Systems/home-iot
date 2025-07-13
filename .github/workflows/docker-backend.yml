@@ -46,15 +46,13 @@ jobs:
           tags: tag:whispern-ci
 
       - name: Execute SSH command on remote
-        uses: cloudposse/github-action-ssh@2.1.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
-          ssh-host: nilss-mac-mini.tailed622e.ts.net
-          ssh-user: ${{ secrets.SSH_NAME }}
-          ssh-command: |
-              cd ~/Projects/iot-home/deployment/backend
-              gunzip -f iot-backend.tar.gz
-              docker load < iot-backend.tar
-              docker stop iot-backend || true
-              docker rm iot-backend || true
-              docker run -d --name iot-backend -p 3000:3000 $IMAGE_NAME:$TIMESTAMP
+        run: |
+          echo "$KEY" > key.pem
+          chmod 600 key.pem
+          ssh -i key.pem -o StrictHostKeyChecking=no nilsj@nilss-mac-mini.tailscale.ts.net
+          cd ~/Projects/iot-home/deployment/backend
+          gunzip -f iot-backend.tar.gz
+          docker load < iot-backend.tar
+          docker stop iot-backend || true
+          docker rm iot-backend || true
+          docker run -d --name iot-backend -p 3000:3000 $IMAGE_NAME:$TIMESTAMP
