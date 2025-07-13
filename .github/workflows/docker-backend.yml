@@ -25,6 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Build the Docker image
+        run: docker build ./$IMAGE_NAME --file ./${{env.IMAGE_NAME}}/Dockerfile --tag $IMAGE_NAME:$TIMESTAMP
+
+      - name: Save Docker image to file
+        run: docker save $IMAGE_TAG | gzip > iot-backend.tar.gz
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
