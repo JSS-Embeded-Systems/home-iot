@@ -43,13 +43,17 @@ jobs:
           oauth-secret: $TS_OAUTH_SECRET
           tags: tag:whispern-ci
 
-      - name: Do the deploy thing
-        run: |
-            ssh -o "StrictHostKeyChecking no" $HOST@nilss-mac-mini "
-            cd ~/Projects/iot-home/deployment/backend
-            gunzip -f iot-backend.tar.gz
-            docker load < iot-backend.tar
-            docker stop iot-backend || true
-            docker rm iot-backend || true
-            docker run -d --name iot-backend -p 3000:3000 $IMAGE_NAME:$TIMESTAMP
-            "
+      - name: Execute SSH command on remote
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ secrets.SSH_NAME }}
+            key: ${{ secrets.SSH_KEY }}
+            port: 22
+            script: |
+              cd ~/Projects/iot-home/deployment/backend
+              gunzip -f iot-backend.tar.gz
+              docker load < iot-backend.tar
+              docker stop iot-backend || true
+              docker rm iot-backend || true
+              docker run -d --name iot-backend -p 3000:3000 $IMAGE_NAME:$TIMESTAMP
