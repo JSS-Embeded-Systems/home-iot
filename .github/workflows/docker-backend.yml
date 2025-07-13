@@ -63,7 +63,7 @@ jobs:
 
       - name: Execute SSH command on remote
         run: |
-          ssh nilsj@nilss-mac-mini.tailed622e.ts.net "
+          ssh nilsj@nilss-mac-mini.tailed622e.ts.net 'bash -l -c "
           whoami
           ls -la
           cd /Users/nilsj/Projects/home-iot/deployment/backend/
@@ -71,6 +71,6 @@ jobs:
           docker load < iot-backend.tar
           docker stop iot-backend || true
           docker rm iot-backend || true
-          docker run -d --name iot-backend -p 3000:3000 $IMAGE_NAME:$TIMESTAMP"
+          docker run -d --name iot-backend -p 3000:3000 $IMAGE_NAME:$TIMESTAMP"'
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
