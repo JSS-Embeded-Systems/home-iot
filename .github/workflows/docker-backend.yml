@@ -56,16 +56,10 @@ jobs:
           echo "Host *" > ~/.ssh/config
           echo "  StrictHostKeyChecking no" >> ~/.ssh/config
           echo "  UserKnownHostsFile=/dev/null" >> ~/.ssh/config
-          chmod 600 ~/.ssh/config
 
-      - name: Upload Docker image to remote
-        uses: appleboy/scp-action@v0.1.6
-        with:
-          host: nilss-mac-mini.tailed622e.ts.net
-          username: nilsj
-          key: $KEY
-          source: iot-backend.tar.gz
-          target: /Users/nilsj/Projects/home-iot/deployment/backend/
+      - name: SCP files to remote
+        run: |
+          scp iot-backend.tar.gz nilsj@nilss-mac-mini:/Users/nilsj/Projects/home-iot/deployment/backend/
 
       - name: Execute SSH command on remote
         run: |
