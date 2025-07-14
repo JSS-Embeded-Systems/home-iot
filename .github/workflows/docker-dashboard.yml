@@ -15,34 +15,49 @@ jobs:
     env:
       TIMESTAMP: ${{ github.run_id }}
       IMAGE_NAME: iot-dashboard
+      TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+      TS_OAUTH_SECRET: ${{ secrets.TS_OAUTH_SECRET }}
+      HOST: ${{ secrets.SSH_HOST }}
+      NAME: ${{ secrets.SSH_NAME }}
+      KEY: ${{ secrets.KEY }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build the Docker image
-        run: docker build ./${{env.IMAGE_NAME}} --file ./${{env.IMAGE_NAME}}/Dockerfile --tag ${{env.IMAGE_NAME}}:${{ env.TIMESTAMP }}
-
-      - name: Save Docker image to file
-        run: docker save ${{ env.IMAGE_NAME }}:${{ env.TIMESTAMP }} | gzip > iot-dashboard.tar.gz
-
-      - name: Upload image to server
-        uses: appleboy/scp-action@v0.1.6
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_NAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "iot-dashboard.tar.gz"
-          target: "~/Projects/iot-home/deployment/dashboard"
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Remote deploy with SSH (zero downtime)
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Connect Tailscale
+        uses: tailscale/github-action@v2
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_NAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ~/Projects/iot-home/deployment/dashboard
-            gunzip -f iot-dashboard.tar.gz
-            docker load < iot-dashboard.tar
-            docker stop iot-dashboard || true
-            docker rm iot-dashboard || true
-            docker run -d --name iot-dashboard -p 3000:3000 ${{ env.IMAGE_NAME }}:${{ env.TIMESTAMP }}
+          oauth-client-id: $TS_OAUTH_CLIENT_ID
+          oauth-secret: $TS_OAUTH_SECRET
+          tags: tag:whispern-ci
+
+      - name: Save the SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Configure SSH (disable host key checking)
+        run: |
+          mkdir -p ~/.ssh
+          echo "Host *" > ~/.ssh/config
+          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+          echo "  UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+
+      - name: SCP files to remote
+        run: |
+          scp -r ./iot-dashboard nilsj@nilss-mac-mini:/Users/nilsj/Projects/home-iot/deployment/dashboard/
+
+      - name: Execute SSH command on remote
+        run: |
+          ssh nilsj@nilss-mac-mini.tailed622e.ts.net 'bash -l -c "
+          cd /Users/nilsj/Projects/home-iot/deployment/backend/iot-dashboard
+          docker stop iot-dashboard || true
+          docker rm iot-dashboard || true
+          docker build -t iot-dashboard:latest .
+          docker run -d --name iot-dashboard -p 3000:3000 iot-dashboard:latest"'

@@ -65,5 +65,3 @@ jobs:
           docker rm iot-backend || true
           docker build -t iot-backend:latest .
           docker run -d --name iot-backend -p 3000:3000 iot-backend:latest"'
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
