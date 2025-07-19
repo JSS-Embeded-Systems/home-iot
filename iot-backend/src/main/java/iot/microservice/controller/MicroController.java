@@ -20,11 +20,6 @@ public class MicroController {
 
   private final MicroService service;
 
-  @PostConstruct
-  public void init() {
-    System.out.println("✅ MicroserviceRestController wurde geladen");
-  }
-
   /**
    *
    * @param rgbRequest  The LED values

@@ -1,7 +1,7 @@
 # Java runtime
 FROM eclipse-temurin:17-jre-alpine
 
-Workdir /moquette
+WORKDIR /moquette
 
 COPY . .
 

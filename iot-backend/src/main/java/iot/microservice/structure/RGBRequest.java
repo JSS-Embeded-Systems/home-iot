@@ -4,7 +4,7 @@ import lombok.*;
 
 @Getter @Setter @AllArgsConstructor
 public class RGBRequest extends Request {
-  private int red;
-  private int green;
-  private int blue;
+  private int r;
+  private int g;
+  private int b;
 }

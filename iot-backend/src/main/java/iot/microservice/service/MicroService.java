@@ -4,7 +4,10 @@ import iot.microservice.entity.MqttDataEntity;
 import iot.microservice.repository.MqttDataRepository;
 import iot.microservice.structure.RGBRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import iot.microservice.component.AppProps;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,20 +17,28 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MicroService {
-  /*@Value("${internal.api}")
-  private final String led;
 
-  @Value("${internal.api}")
-  private final String lamp;*/
-
-  //private final RestTemplate restTemplate;
   private final MqttDataRepository repository;
+  private final AppProps appProps;
 
   public String ledStringService(RGBRequest rgbRequest) {
-    return "Success";
+    WebClient webClient = WebClient.create("http://"+appProps.getLedIp());
+    return webClient.post()
+            .uri("/set")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(rgbRequest)
+            .retrieve()
+            .bodyToMono(String.class)
+            .block();
   }
+
   public String shellyRelaySwitch(String status) {
-    return "Success";
+    WebClient webClient = WebClient.create("http://"+appProps.getLampIp());
+    return webClient.get()
+            .uri("/relay/0?turn="+status)
+            .retrieve()
+            .bodyToMono(String.class)
+            .block();
   }
 
   // Function here to retrieve data from Mongo DB
