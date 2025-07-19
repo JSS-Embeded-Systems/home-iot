@@ -36,7 +36,7 @@ public class MqttListenerService {
       iMqttClient.connect(options);
       System.out.println("✅ MQTT client connected.");
 
-      iMqttClient.subscribe("sensor/sleep", this::handleMessage);
+      iMqttClient.subscribe("sensors/sleep", this::handleMessage);
     } catch (MqttException e) {
       e.printStackTrace();
     }
