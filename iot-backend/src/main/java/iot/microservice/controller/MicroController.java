@@ -43,7 +43,7 @@ public class MicroController {
   @GetMapping("/bedroom/sleep/{day}")
   public ResponseEntity<Response> sleep(@PathVariable("day") int timeframe) {
     Response res = new Response();
-    res.setMessage(service.retrieveSleep("sensor/sleep",timeframe));
+    res.setMessage(service.retrieveSleep("sensors/sleep",timeframe));
     return new ResponseEntity<>(res, HttpStatus.OK);
   }
 }
