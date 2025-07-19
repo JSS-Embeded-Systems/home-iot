@@ -29,7 +29,7 @@ public class MicroController {
   public ResponseEntity<Response> ledStripe(@RequestBody RGBRequest rgbRequest) {
     Response res = new Response();
     res.setMessage(service.ledStringService(rgbRequest));
-    System.out.println("Calling internal device with output: "+res);
+    System.out.println("Calling internal device with output: "+res.getMessage());
     return new ResponseEntity<>(res, HttpStatus.OK);
   }
 
