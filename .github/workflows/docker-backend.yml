@@ -62,4 +62,4 @@ jobs:
           docker stop iot-backend || true
           docker rm iot-backend || true
           docker build -t iot-backend:latest .
-          docker run -d --name iot-backend --network -p 3000:8080 iot-backend:latest"'
+          docker run -d --name iot-backend -p 3000:8080 iot-backend:latest"'
