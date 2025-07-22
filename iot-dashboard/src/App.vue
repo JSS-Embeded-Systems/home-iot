@@ -1,68 +1,57 @@
-<script setup>
-import Title from './components/Title.vue'
-import RGBSelector from "./components/RGBSelector.vue";
-import OnOffSwitch from "./components/OnOffSwitch.vue";
+<script setup lang="ts">
+  import AppContainer from './components/AppContainer.vue'
+  import { onMounted } from 'vue'
+  import AppComponentHome from '@/components/AppComponentHome.vue'
+  import AppComponentA from '@/components/AppComponentA.vue'
+  import AppComponentB from '@/components/AppComponentB.vue'
+  import { useComponentSwitcher } from '@/stores/useComponentSwitcher.ts'
 
-import {Tabs, TabList, Tab, TabPanels, TabPanel, Button} from 'primevue';
-import Chart from 'primevue/chart';
+  const { currentComponent, switchTo, init } = useComponentSwitcher();
 
+  // Initialize with your components
+  onMounted(() => {
+    init({
+      home: AppComponentHome,
+      dashboard: AppComponentA,
+      settings: AppComponentB
+    });
+  });
+
+  function show() {
+    console.log(currentComponent);
+  }
 </script>
 
 <template>
-  <section>
-    <Title msg="Garden" />
-    <p>The current moisture status</p>
-    <!--<Chart type="bar" :data="chartData" :options="chartOptions" />-->
-    <p>The current waterpump status</p>
-    <div class="flex mb-2 gap-2 justify-end">
-      <Button @click="value = '0'" rounded label="1" class="w-8 h-8 p-0" :outlined="value !== '0'" />
-      <Button @click="value = '1'" rounded label="2" class="w-8 h-8 p-0" :outlined="value !== '1'" />
-      <Button @click="value = '2'" rounded label="3" class="w-8 h-8 p-0" :outlined="value !== '2'" />
+  <header>
+    <div class="bg-gray-100 p-2">
+      <nav class="bg-gray-900 text-white rounded px-6 py-4 flex items-center justify-between shadow">
+        <div>
+          <h1 class="text-xl font-bold">IoT Home</h1>
+          <p  class="text-sm text-gray-400"></p>
+        </div>
+        <div class="space-x-4">
+          <button @click="switchTo('home')" href="#" class="hover:underline">Home</button>
+          <button @click="switchTo('dashboard')" href="#" class="hover:underline">Devices</button>
+          <button @click="switchTo('settings')" href="#" class="hover:underline">Settings</button>
+        </div>
+      </nav>
     </div>
+  </header>
 
-    <Tabs v-model:value="value" style="max-width: 32rem;">
-      <TabList>
-        <Tab value="0">Header I</Tab>
-        <Tab value="1">Header II</Tab>
-        <Tab value="2">Header III</Tab>
-      </TabList>
-      <TabPanels>
-        <TabPanel value="0">
-          <p class="m-0">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-        </TabPanel>
-        <TabPanel value="1">
-          <p class="m-0">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
-            ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-          </p>
-        </TabPanel>
-        <TabPanel value="2">
-          <p class="m-0">
-            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
-            qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-          </p>
-        </TabPanel>
-      </TabPanels>
-    </Tabs>
-  </section>
-  <section>
-    <Title msg="Bedroom" />
-    <div class="wrapper">
-      <RGBSelector title="RGB LED Bed" />
-      <OnOffSwitch title="Main Lamp bedroom" />
+  <main>
+    <div class="w-screen flex-1 flex flex-row overflow-hidden">
+      <div class="w-64 h-screen bg-gray-100 p-4">
+        <div class="bg-amber-100 p-6 h-fit rounded shadow"></div>
+
+      </div>
+      <AppContainer class="flex-1">
+        <component :is="currentComponent"/>
+      </AppContainer>
     </div>
-  </section>
+  </main>
 </template>
 
-<script>
-export default {
-  name: "App.vue"
-}
-</script>
 
 <style scoped>
-
 </style>

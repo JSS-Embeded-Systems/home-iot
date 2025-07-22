@@ -1,0 +1,7 @@
+/* Tailwind includes */
+@import "tailwindcss";
+
+/* Rest of imports */
+@import './base.css';
+
+
