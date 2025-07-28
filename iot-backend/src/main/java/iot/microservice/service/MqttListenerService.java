@@ -23,23 +23,37 @@ public class MqttListenerService {
 
   @PostConstruct
   public void init() {
-    try {
-      String clientId = UUID.randomUUID().toString();
-      iMqttClient = new MqttClient(brokerUrl, clientId);
+    // Alle 30 Sekunden prüfen, ob noch verbunden
+    new Thread(() -> {
+      while (true) {
+        try {
+          if (iMqttClient == null || !iMqttClient.isConnected()) {
+            System.out.println("[MQTT] Lost connection. Reconnecting...");
 
-      MqttConnectOptions options = new MqttConnectOptions();
-      options.setAutomaticReconnect(true);
-      options.setCleanSession(true);
-      options.setConnectionTimeout(60);
-      options.setKeepAliveInterval(30);
+            String clientId = UUID.randomUUID().toString();
+            iMqttClient = new MqttClient(brokerUrl, clientId);
 
-      iMqttClient.connect(options);
-      System.out.println("✅ MQTT client connected.");
+            MqttConnectOptions options = new MqttConnectOptions();
+            options.setAutomaticReconnect(true);
+            options.setCleanSession(true);
+            options.setConnectionTimeout(60);
+            options.setKeepAliveInterval(30);
 
-      iMqttClient.subscribe("sensors/sleep", this::handleMessage);
-    } catch (MqttException e) {
-      e.printStackTrace();
-    }
+            iMqttClient.connect(options);
+            iMqttClient.subscribe("sensors/sleep", this::handleMessage);
+
+            System.out.println("[MQTT] Reconnected and subscribed.");
+          }
+
+          Thread.sleep(30000); // Wait 30 sec
+        } catch (Exception e) {
+          e.printStackTrace();
+          try {
+            Thread.sleep(5000); // Retry after 5 sec
+          } catch (InterruptedException ignored) {}
+        }
+      }
+    }).start();
   }
 
   private void handleMessage(String topic, MqttMessage message) throws MqttException {
