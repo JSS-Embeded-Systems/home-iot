@@ -1,7 +1,9 @@
 /* Tailwind includes */
 @import "tailwindcss";
+/* Prime includes */
+@import "primeicons/primeicons.css";
 
 /* Rest of imports */
 @import './base.css';
 
-
+@import './toggleSwitch.css';

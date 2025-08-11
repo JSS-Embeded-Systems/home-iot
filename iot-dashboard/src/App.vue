@@ -5,6 +5,7 @@
   import AppComponentA from '@/components/AppComponentA.vue'
   import AppComponentB from '@/components/AppComponentB.vue'
   import { useComponentSwitcher } from '@/stores/useComponentSwitcher.ts'
+  import AppSidebar from '@/components/AppSidebar.vue'
 
   const { currentComponent, switchTo, init } = useComponentSwitcher();
 
@@ -16,10 +17,6 @@
       settings: AppComponentB
     });
   });
-
-  function show() {
-    console.log(currentComponent);
-  }
 </script>
 
 <template>
@@ -27,7 +24,7 @@
     <div class="bg-gray-100 p-2">
       <nav class="bg-gray-900 text-white rounded px-6 py-4 flex items-center justify-between shadow">
         <div>
-          <h1 class="text-xl font-bold">IoT Home</h1>
+          <h1 class="text-xl font-bold">142</h1>
           <p  class="text-sm text-gray-400"></p>
         </div>
         <div class="space-x-4">
@@ -42,7 +39,7 @@
   <main>
     <div class="w-screen flex-1 flex flex-row overflow-hidden">
       <div class="w-64 h-screen bg-gray-100 p-4">
-        <div class="bg-amber-100 p-6 h-fit rounded shadow"></div>
+        <AppSidebar />
 
       </div>
       <AppContainer class="flex-1">

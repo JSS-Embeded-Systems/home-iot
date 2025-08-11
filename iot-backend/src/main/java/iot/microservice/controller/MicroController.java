@@ -46,4 +46,46 @@ public class MicroController {
     res.setMessage(service.retrieveSleep("sensors/sleep",timeframe));
     return new ResponseEntity<>(res, HttpStatus.OK);
   }
+
+  @GetMapping("/bedroom/sleep/quality-score")
+  public ResponseEntity<Response> sleepQualityScore() {
+    Response res = new Response();
+    res.setMessage(service.retrieveSleepQualityScore("sensors/sleep"));
+    return new ResponseEntity<>(res, HttpStatus.OK);
+  }
+
+  @GetMapping("/bedroom/sleep/total-duration")
+  public ResponseEntity<Response> sleepTotalDuration() {
+    Response res = new Response();
+    res.setMessage(service.retrieveSleepTotalDuration());
+    return new ResponseEntity<>(res, HttpStatus.OK);
+  }
+
+  @GetMapping("/bedroom/sleep/time-series")
+  public ResponseEntity<Response> sleepTimeSeries() {
+    Response res = new Response();
+    res.setMessage(service.retrieveSleepTimeSeries());
+    return new ResponseEntity<>(res, HttpStatus.OK);
+  }
+
+  @GetMapping("/bedroom/sleep/median-bpm")
+  public ResponseEntity<Response> sleepMedianBpm() {
+    Response res = new Response();
+    res.setMessage(service.retrieveSleepMedianBpm("sensors/sleep"));
+    return new ResponseEntity<>(res, HttpStatus.OK);
+  }
+
+  @GetMapping("/bedroom/sleep/median-rpm")
+  public ResponseEntity<Response> sleepMedianRpm() {
+    Response res = new Response();
+    res.setMessage(service.retrieveSleepMedianRPM("Sensors/sleep"));
+    return new ResponseEntity<>(res, HttpStatus.OK);
+  }
+
+  @GetMapping("/bedroom/sleep/states-series")
+  public ResponseEntity<Response> sleepStatesSeries() {
+    Response res = new Response();
+    res.setMessage(service.retrieveSleepStateSeries());
+    return new ResponseEntity<>(res, HttpStatus.OK);
+  }
 }

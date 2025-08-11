@@ -1,5 +1,0 @@
-**/Target/**
-!moquette-distribution/target/distribution-*/
-*.iml
-.git
-.idea
