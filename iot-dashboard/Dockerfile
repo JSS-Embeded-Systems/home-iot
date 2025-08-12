@@ -1,24 +1,6 @@
 FROM ubuntu:latest
 LABEL authors="nils"
 
-# Development
-FROM node:20-alpine AS builder
-
-# Arbeitsverzeichnis setzen
-WORKDIR /app
-
-# Nur package-Dateien zuerst kopieren, um Caching zu nutzen
-COPY package*.json ./
-
-# Dependencies installieren
-RUN npm ci
-
-# Restliche Dateien kopieren
-COPY . .
-
-# Production-Build erstellen
-RUN npm run build
-
 # Production
 FROM nginx:1.27-alpine AS production
 
