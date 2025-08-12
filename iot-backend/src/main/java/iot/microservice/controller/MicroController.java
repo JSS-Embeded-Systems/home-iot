@@ -40,6 +40,13 @@ public class MicroController {
     return new ResponseEntity<>(res, HttpStatus.OK);
   }
 
+  @GetMapping("/bedroom/lamp/status")
+  public ResponseEntity<Response> getLampStatus() {
+    Response res = new Response();
+    res.setMessage(service.shellyRelayStatus());
+    return new ResponseEntity<>(res, HttpStatus.OK);
+  }
+
   @GetMapping("/bedroom/sleep/{day}")
   public ResponseEntity<Response> sleep(@PathVariable("day") int timeframe) {
     Response res = new Response();
@@ -57,14 +64,14 @@ public class MicroController {
   @GetMapping("/bedroom/sleep/total-duration")
   public ResponseEntity<Response> sleepTotalDuration() {
     Response res = new Response();
-    res.setMessage(service.retrieveSleepTotalDuration());
+    res.setMessage(service.retrieveSleepTotalDuration("sensors/sleep"));
     return new ResponseEntity<>(res, HttpStatus.OK);
   }
 
   @GetMapping("/bedroom/sleep/time-series")
   public ResponseEntity<Response> sleepTimeSeries() {
     Response res = new Response();
-    res.setMessage(service.retrieveSleepTimeSeries());
+    res.setMessage(service.retrieveSleepTimeSeries("sensors/sleep"));
     return new ResponseEntity<>(res, HttpStatus.OK);
   }
 
@@ -85,7 +92,7 @@ public class MicroController {
   @GetMapping("/bedroom/sleep/states-series")
   public ResponseEntity<Response> sleepStatesSeries() {
     Response res = new Response();
-    res.setMessage(service.retrieveSleepStateSeries());
+    res.setMessage(service.retrieveSleepStateSeries("sensors/sleep"));
     return new ResponseEntity<>(res, HttpStatus.OK);
   }
 }

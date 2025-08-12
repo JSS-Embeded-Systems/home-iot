@@ -45,6 +45,15 @@ public class MicroService {
             .block();
   }
 
+  public String shellyRelayStatus() {
+    WebClient webClient = WebClient.create("http://"+appProps.getLampIp());
+    return webClient.get()
+            .uri("/relay/0")
+            .retrieve()
+            .bodyToMono(String.class)
+            .block();
+  }
+
   // Function here to retrieve data from Mongo DB
   // Format: topic, payload, timestamp
   public List<MqttDataEntity> retrieveSleep(String topic, int timeframe) {
@@ -58,18 +67,16 @@ public class MicroService {
   * - Sleep Quality Score
   */
   public MedianStandardDeviation retrieveSleepQualityScore(String topic) {
-    ZonedDateTime past = ZonedDateTime.now().minusDays(1).withHour(16).withMinute(0).withSecond(0).withNano(0);
-    ZonedDateTime currentTime = ZonedDateTime.now();
     ToIntFunction<SleepData> extractor = SleepData::getSleepQualityScore;
-    return calc.anyMedianStandardDeviation(topic, extractor, currentTime, past);
+    return calc.anyMedianStandardDeviation(topic, extractor, ZonedDateTime.now(), calc.getTimeDelta());
   }
 
   /*
    * return JSON with
    * - Total Duration
    */
-  public String retrieveSleepTotalDuration() {
-    return "";
+  public String retrieveSleepTotalDuration(String topic) {
+    return calc.estimateDuration(topic, ZonedDateTime.now(), calc.getTimeDelta());
   }
 
   /*
@@ -81,8 +88,8 @@ public class MicroService {
    *          )
    * - Time stamp
    */
-  public String retrieveSleepTimeSeries() {
-    return "Under development";
+  public String retrieveSleepTimeSeries(String topic) {
+    return calc.timeSeries(topic, ZonedDateTime.now(), calc.getTimeDelta());
   }
 
   /*
@@ -91,10 +98,8 @@ public class MicroService {
   * - Standard Deviation
   */
   public MedianStandardDeviation retrieveSleepMedianBpm(String topic) {
-    ZonedDateTime past = ZonedDateTime.now().minusDays(1).withHour(16).withMinute(0).withSecond(0).withNano(0);
-    ZonedDateTime currentTime = ZonedDateTime.now();
     ToIntFunction<SleepData> extractor = SleepData::getAverageHeartbeat;
-    return calc.anyMedianStandardDeviation(topic, extractor, currentTime, past);
+    return calc.anyMedianStandardDeviation(topic, extractor, ZonedDateTime.now(), calc.getTimeDelta());
   }
 
   /*
@@ -103,10 +108,8 @@ public class MicroService {
   * - Standard deviation
   */
   public MedianStandardDeviation retrieveSleepMedianRPM(String topic) {
-    ZonedDateTime past = ZonedDateTime.now().minusDays(1).withHour(16).withMinute(0).withSecond(0).withNano(0);
-    ZonedDateTime currentTime = ZonedDateTime.now();
     ToIntFunction<SleepData> extractor = SleepData::getAverageRespiration;
-    return calc.anyMedianStandardDeviation(topic, extractor, currentTime, past);
+    return calc.anyMedianStandardDeviation(topic, extractor, ZonedDateTime.now(), calc.getTimeDelta());
   }
 
   /*
@@ -114,7 +117,7 @@ public class MicroService {
    * - New sleepState
    * - Time stamp
    */
-  public String retrieveSleepStateSeries() {
-    return "Under development";
+  public String retrieveSleepStateSeries(String topic) {
+    return calc.sleepStateSeries(topic, ZonedDateTime.now(), calc.getTimeDelta());
   }
 }
