@@ -1,16 +1,49 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { setBedroomLedColor } from '@/api/iotClient';
 import ToggleSwitch from '@/components/accessories/ToggleSwitch.vue'
 
 defineProps({
   title: String,
 })
 
-const color = ref('00000');
+const color = ref('00000=');
 
 function setColor(value: string) {
   color.value = value;
+  scheduleSend();
 }
+
+
+function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
+  const cleaned = hex.replace(/^#/, '').trim();
+  const valid = /^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$/;
+  if (!valid.test(cleaned)) return null;
+  const h = cleaned.length === 3
+    ? cleaned.split('').map(ch => ch + ch).join('')
+    : cleaned;
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  return { r, g, b };
+}
+
+let sendTimer: number | undefined;
+function scheduleSend() {
+  if (sendTimer) window.clearTimeout(sendTimer);
+  sendTimer = window.setTimeout(async () => {
+    const rgb = hexToRgb(color.value);
+    if (!rgb) return; // ignore incomplete input
+    try {
+      await setBedroomLedColor(rgb);
+    } catch (e) {
+      console.error('Failed to set LED color:', e);
+    }
+  }, 150); // simple debounce to coalesce rapid changes
+}
+
+// Trigger send when the user types in the input
+watch(color, () => scheduleSend());
 </script>
 
 <template>

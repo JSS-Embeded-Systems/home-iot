@@ -21,3 +21,7 @@ target folder and run the .jar file
 ```bash
 java -jar target/name.jar
 ```
+
+## Documentation
+
+To come soon
