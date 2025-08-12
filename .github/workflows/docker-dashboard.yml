@@ -56,7 +56,7 @@ jobs:
       - name: Execute SSH command on remote
         run: |
           ssh nilsj@nilss-mac-mini.tailed622e.ts.net 'bash -l -c "
-          cd /Users/nilsj/Projects/home-iot/deployment/backend/iot-dashboard
+          cd /Users/nilsj/Projects/home-iot/deployment/iot-dashboard
           docker stop iot-dashboard || true
           docker rm iot-dashboard || true
           docker build -t iot-dashboard:latest .
