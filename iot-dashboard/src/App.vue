@@ -12,8 +12,8 @@
   // Initialize with your components
   onMounted(() => {
     init({
-      home: AppComponentHome,
-      dashboard: AppComponentA,
+      home: AppComponentA,
+      dashboard: AppComponentHome,
       settings: AppComponentB
     });
   });

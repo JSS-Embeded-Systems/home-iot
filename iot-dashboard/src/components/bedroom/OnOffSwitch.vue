@@ -20,7 +20,9 @@ async function fetchLampStatus() {
       console.error(`Status request failed (${res.status}): ${body || res.statusText}`);
       return;
     }
+
     const data = await res.json();
+    console.log(data);
     isOn.value = !!data?.ison;
   } catch (e) {
     console.error('Failed to fetch lamp status:', e);

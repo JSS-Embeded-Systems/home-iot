@@ -1,9 +1,9 @@
 import { shallowRef } from 'vue';
-import type { Component } from 'vue';
+import type { Component, ShallowRef } from 'vue';
 
 export function useComponentSwitcher() {
-  // Store components with shallowRef to prevent unnecessary reactivity
-  const components = {
+  // Allow dynamic component keys; preseed with known ones
+  const components: Record<string, ShallowRef<Component | undefined>> = {
     home: shallowRef<Component>(),
     dashboard: shallowRef<Component>(),
     settings: shallowRef<Component>()
@@ -12,18 +12,23 @@ export function useComponentSwitcher() {
   // Current active component
   const currentComponent = shallowRef<Component>();
 
-  // Initialize with first component
-  const init = (componentMap: Record<string, Component>) => {
-    Object.assign(components, Object.fromEntries(
-      Object.entries(componentMap).map(([key, comp]) => [key, shallowRef(comp)])
-    ));
-    currentComponent.value = Object.values(components)[0].value;
+    // Initialize with provided component map (dynamic keys supported)
+    const init = (componentMap: Record<string, Component>) => {
+    for (const [key, comp] of Object.entries(componentMap)) {
+      components[key] = shallowRef<Component | undefined>(comp);
+    }
+
+    const firstKey = Object.keys(componentMap)[0] ?? Object.keys(components)[0];
+    if (firstKey && components[firstKey]?.value) {
+      currentComponent.value = components[firstKey].value;
+    }
   };
 
   // Switch to a specific component
   const switchTo = (name: string) => {
-    if (components[name]) {
-      currentComponent.value = components[name].value;
+    const ref = components[name];
+    if (ref?.value) {
+      currentComponent.value = ref.value;
     }
   };
 

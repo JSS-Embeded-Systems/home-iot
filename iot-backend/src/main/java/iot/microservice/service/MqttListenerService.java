@@ -10,6 +10,7 @@ import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Service
@@ -58,11 +59,11 @@ public class MqttListenerService {
 
   private void handleMessage(String topic, MqttMessage message) throws MqttException {
     String payload = new String(message.getPayload());
-
+    ZonedDateTime timestamp = ZonedDateTime.now();
     MqttDataEntity data = new MqttDataEntity();
     data.setTopic(topic);
     data.setPayload(payload);
-    data.setTimestamp(new java.util.Date());
+    data.setTimestamp(timestamp);
     repository.save(data);
   }
 }
