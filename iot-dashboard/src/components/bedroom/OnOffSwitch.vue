@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ToggleSwitch from '../accessories/ToggleSwitch.vue';
 import { ref, onMounted } from 'vue';
-import { setBedroomLamp } from '@/api/iotClient';
+import { setBedroomLamp } from '../../api/iotClient';
 
 defineProps({
   title: String,

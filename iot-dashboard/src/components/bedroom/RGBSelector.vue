@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { setBedroomLedColor } from '@/api/iotClient';
-import ToggleSwitch from '@/components/accessories/ToggleSwitch.vue'
+import { setBedroomLedColor } from '../../api/iotClient';
+import ToggleSwitch from '../accessories/ToggleSwitch.vue'
 
 defineProps({
   title: String,

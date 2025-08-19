@@ -1,11 +1,11 @@
 <script setup lang="ts">
   import AppContainer from './components/AppContainer.vue'
   import { onMounted } from 'vue'
-  import AppComponentHome from '@/components/AppComponentHome.vue'
-  import AppComponentA from '@/components/AppComponentA.vue'
-  import AppComponentB from '@/components/AppComponentB.vue'
-  import { useComponentSwitcher } from '@/stores/useComponentSwitcher.ts'
-  import AppSidebar from '@/components/AppSidebar.vue'
+  import AppComponentHome from './components/AppComponentHome.vue'
+  import AppComponentA from './components/AppComponentA.vue'
+  import AppComponentB from './components/AppComponentB.vue'
+  import { useComponentSwitcher } from './stores/useComponentSwitcher.ts'
+  import AppSidebar from './components/AppSidebar.vue'
 
   const { currentComponent, switchTo, init } = useComponentSwitcher();
 
