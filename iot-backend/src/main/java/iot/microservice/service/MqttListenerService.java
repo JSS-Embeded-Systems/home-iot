@@ -22,13 +22,13 @@ public class MqttListenerService {
   @Value("${mqtt.broker}")
   private String brokerUrl;
 
-  @Value("${mqtt.username:}")
+  @Value("${mqtt.username}")
   private String username;
 
-  @Value("${mqtt.password:}")
+  @Value("${mqtt.password}")
   private String password;
 
-  @Value("${mqtt.topic:sensors/sleep}")
+  @Value("${mqtt.topic}")
   private String topic;
 
   @PostConstruct
