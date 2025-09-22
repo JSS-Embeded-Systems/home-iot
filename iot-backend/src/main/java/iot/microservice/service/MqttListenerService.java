@@ -65,6 +65,9 @@ public class MqttListenerService {
 
           Thread.sleep(30000); // Wait 30 sec
         } catch (Exception e) {
+          if (e instanceof MqttException me) {
+            System.err.println("[MQTT] ReasonCode=" + me.getReasonCode() + ", Message=" + me.getMessage());
+          }
           e.printStackTrace();
           try {
             Thread.sleep(5000); // Retry after 5 sec
