@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.UUID;
 
 @Service
@@ -41,6 +42,7 @@ public class MqttListenerService {
             System.out.println("[MQTT] Lost connection. Reconnecting...");
 
             String clientId = UUID.randomUUID().toString();
+            System.out.println("[MQTT] " + username + ", "+password);
             iMqttClient = new MqttClient(brokerUrl, clientId);
 
             MqttConnectOptions options = new MqttConnectOptions();
@@ -55,6 +57,8 @@ public class MqttListenerService {
             if (password != null) {
               options.setPassword(password.toCharArray());
             }
+
+            System.out.println("[MQTT] "+options.getUserName()+" "+ Arrays.toString(options.getPassword()));
 
             iMqttClient.connect(options);
             System.out.println("[MQTT] Connected to " + brokerUrl + " as " + clientId + ", subscribing to '" + topic + "'.");
