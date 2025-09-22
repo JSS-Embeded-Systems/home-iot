@@ -60,4 +60,4 @@ jobs:
           docker stop iot-dashboard || true
           docker rm iot-dashboard || true
           docker build -t iot-dashboard:latest .
-          docker run -d --name iot-dashboard -p 3000:3000 iot-dashboard:latest"'
+          docker run -d --name iot-dashboard -p 8080:80 iot-dashboard:latest"'
