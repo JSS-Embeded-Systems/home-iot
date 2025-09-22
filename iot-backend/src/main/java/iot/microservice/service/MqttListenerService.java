@@ -22,6 +22,15 @@ public class MqttListenerService {
   @Value("${mqtt.broker}")
   private String brokerUrl;
 
+  @Value("${mqtt.username:}")
+  private String username;
+
+  @Value("${mqtt.password:}")
+  private String password;
+
+  @Value("${mqtt.topic:sensors/sleep}")
+  private String topic;
+
   @PostConstruct
   public void init() {
     // Alle 30 Sekunden prüfen, ob noch verbunden
@@ -40,8 +49,16 @@ public class MqttListenerService {
             options.setConnectionTimeout(60);
             options.setKeepAliveInterval(30);
 
+            if (username != null && !username.isEmpty()) {
+              options.setUserName(username);
+            }
+            if (password != null) {
+              options.setPassword(password.toCharArray());
+            }
+
             iMqttClient.connect(options);
-            iMqttClient.subscribe("sensors/sleep", this::handleMessage);
+            System.out.println("[MQTT] Connected to " + brokerUrl + " as " + clientId + ", subscribing to '" + topic + "'.");
+            iMqttClient.subscribe(topic, this::handleMessage);
 
             System.out.println("[MQTT] Reconnected and subscribed.");
           }
