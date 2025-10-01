@@ -1,5 +1,6 @@
 iot/microservice/component/AppProps.class
 iot/microservice/structure/Response.class
+iot/microservice/service/MqttListenerService$PresenceWorkflow.class
 iot/microservice/entity/SleepData.class
 iot/microservice/service/MicroService.class
 iot/microservice/exception/GlobalHandler.class

@@ -7,4 +7,8 @@ public class RGBRequest extends Request {
   private int r;
   private int g;
   private int b;
+
+  public RGBRequest() {
+
+  }
 }
