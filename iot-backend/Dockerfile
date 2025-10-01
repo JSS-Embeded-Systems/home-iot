@@ -1,5 +1,5 @@
 # Use Java 21 runtime only (no compiler needed)
-FROM openjdk:21-slim
+FROM openjdk:24-slim
 
 # Set working directory inside the container
 WORKDIR /app
