@@ -1,5 +1,5 @@
-# Use Java 21 runtime only (no compiler needed)
-FROM openjdk:24-slim
+# Java 24 runtime image (matches your build JDK)
+FROM eclipse-temurin:24-jre
 
 # Set working directory inside the container
 WORKDIR /app
@@ -11,4 +11,6 @@ COPY target/*.jar app.jar
 EXPOSE 3000
 
 # Start the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENV SPRING_PROFILES_ACTIVE=prod
+ENV JAVA_OPTS=""
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
